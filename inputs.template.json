@@ -1,0 +1,6 @@
+{
+  "PairedRnaSeqWorkflow.r1_files": "Array[File]",
+  "PairedRnaSeqWorkflow.r2_files": "Array[File]",
+  "PairedRnaSeqWorkflow.genome": "String",
+  "PairedRnaSeqWorkflow.output_tar_name": "String"
+}
