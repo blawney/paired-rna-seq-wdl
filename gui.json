@@ -8,7 +8,9 @@
 			},
 			"display_element": {
 				"type": "file_chooser",
-				"filter": ".*_R[1,2].fastq.gz",
+                                "context_args": {
+    					"filter": ".*_R[1,2].fastq.gz"
+				},
 				"label": "Input files:",
 				"choose_multiple": true,
 				"description": "Choose input fastq-format files to analyze.  Files should end with \"_R1.fastq.gz\" or \"_R2.fastq.gz\".  Unpaired files will be ignored."
