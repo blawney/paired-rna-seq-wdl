@@ -114,7 +114,7 @@ task tar_results {
     }
 
     runtime {
-        docker: "docker.io/blawney/rnaseq"
+        docker: "docker.io/blawney/rnaseq:v0.0.1"
         cpu: 2
         memory: "6 G"
         disks: "local-disk " + disk_size + " HDD"
