@@ -94,6 +94,8 @@ task tar_results {
     Array[File] dedup_metrics
     File multiqc_report
 
+    Int disk_size = 200
+
     command {
         tar -cf "${tar_name}.tar" \
             ${primary_fc_file} \
@@ -109,5 +111,13 @@ task tar_results {
 
     output {
         File tar_out = "${tar_name}.tar"
+    }
+
+    runtime {
+        docker: "docker.io/blawney/rnaseq"
+        cpu: 2
+        memory: "6 G"
+        disks: "local-disk " + disk_size + " HDD"
+        preemptible: 0
     }
 }
