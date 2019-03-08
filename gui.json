@@ -15,7 +15,7 @@
 			}	
 		},
 		{
-			"target": "PairedRnaSeqWorkflow.output_tar_name",
+			"target": "PairedRnaSeqWorkflow.output_zip_name",
 			"display_element": {
 				"type": "text",
 				"label": "Output filename:",
