@@ -32,8 +32,8 @@ task perform_align{
     String sample_name
 
     # Maps the genome choice to the location of the STAR index:
-    Map[String, File] genome_index_archive_map = {"hg38":"gs://cnap-hsph-resources/grch38.95/grch38.95.tar", "mm10":"gs://cnap-hsph-resources/grch38.95/grch38.95.tar"}
-    Map[String, File] gtf_map = {"hg38":"gs://cnap-hsph-resources/grch38.95/Homo_sapiens.GRCh38.95.gtf", "mm10":"gs://cnap-hsph-resources/grch38.95/Homo_sapiens.GRCh38.95.gtf"}
+    Map[String, File] genome_index_archive_map = {"Ensembl Homo sapiens GRCh38.95":"gs://cnap-hsph-resources/grch38.95/grch38.95.tar", "Ensembl Mus musculus GRCm38.95":"gs://cnap-hsph-resources/grch38.95/grch38.95.tar"}
+    Map[String, File] gtf_map = {"Ensembl Homo sapiens GRCh38.95":"gs://cnap-hsph-resources/grch38.95/Homo_sapiens.GRCh38.95.gtf", "Ensembl Mus musculus GRCm38.95":"gs://cnap-hsph-resources/grch38.95/Homo_sapiens.GRCh38.95.gtf"}
 
     # Default disk size in GB
     Int disk_size = 300

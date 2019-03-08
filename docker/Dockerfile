@@ -12,7 +12,8 @@ RUN apt-get update && \
     python3-dev \
     python3-pip \
     default-jre \
-    r-base
+    r-base \
+    pandoc
 
 # Install all software under /opt/software:
 RUN mkdir -p /opt/software 
@@ -65,6 +66,9 @@ RUN pip3 install RSeQC
 # Install multiqc:
 RUN pip3 install multiqc
 
+# Install Jinja2 for templating.  Likely installed with other python packages, but just to be sure:
+RUN pip3 install Jinja2
+
 # for multiqc to read commandline:
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
@@ -77,5 +81,14 @@ RUN chmod +x /usr/local/bin/concatenate_featurecounts.py
 # The "alternate" script for inferring the strandedness:
 ADD alternate_infer_experiment.py /usr/local/bin/
 RUN chmod +x /usr/local/bin/alternate_infer_experiment.py
+
+# The script for generating the markdown report:
+ADD generate_report.py /usr/local/bin/
+RUN chmod +x /usr/local/bin/generate_report.py
+
+# Add the report template:
+RUN mkdir /opt/report
+ADD paired_rnaseq_report.md /opt/report/
+ADD report.css /opt/report/
 
 ENTRYPOINT ["/bin/bash"]

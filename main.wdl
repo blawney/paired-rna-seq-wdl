@@ -11,7 +11,9 @@ workflow PairedRnaSeqWorkflow{
     Array[File] r1_files
     Array[File] r2_files
     String genome
-    String output_tar_name
+    String output_zip_name
+    String git_repo_url
+    String git_commit_hash
 
     Array[Pair[File, File]] fastq_pairs = zip(r1_files, r2_files)
     scatter(item in fastq_pairs){
@@ -55,9 +57,18 @@ workflow PairedRnaSeqWorkflow{
             r2_fastqc_zips = fastqc_for_read2.fastqc_zip
     }
 
-    call tar_results {
+    call generate_report {
         input:
-            tar_name = output_tar_name,
+            r1_files = r1_files,
+            r2_files = r2_files,
+            genome = genome,
+            git_commit_hash = git_commit_hash,
+            git_repo_url = git_repo_url
+    }
+
+    call zip_results {
+        input:
+            zip_name = output_zip_name,
             primary_fc_file = merge_primary_counts.count_matrix,
             dedup_fc_file = merge_dedup_counts.count_matrix,
             primary_bam_files = single_sample_process.primary_bam,
@@ -66,11 +77,12 @@ workflow PairedRnaSeqWorkflow{
             dedup_fc_summaries = single_sample_process.dedup_feature_counts_summary, 
             primary_fc_summaries = single_sample_process.primary_filter_feature_counts_summary,
             dedup_metrics = single_sample_process.dedup_metrics,
-            multiqc_report = experimental_qc.report
+            multiqc_report = experimental_qc.report,
+            analysis_report = generate_report.report
     }
 
     output {
-        File tar_out = tar_results.tar_out
+        File zip_out = zip_results.zip_out
     }
 
     meta {
@@ -80,9 +92,45 @@ workflow PairedRnaSeqWorkflow{
     }
 }
 
-task tar_results {
 
-    String tar_name 
+task generate_report {
+
+    Array[String] r1_files
+    Array[String] r2_files
+    String genome    
+    String git_repo_url
+    String git_commit_hash
+
+    command <<<
+        generate_report.py \
+          -r1 ${sep=" " r1_files} \
+          -r2 ${sep=" " r2_files} \
+          -g ${genome} \
+          -r ${git_repo_url} \
+          -c ${git_commit_hash} \
+          -t /opt/report/paired_rnaseq_report.md \
+          -o completed_report.md
+
+        pandoc -H /opt/report/report.css -s completed_report.md -o analysis_report.html
+    >>>
+
+    output {
+        File report = "analysis_report.html"
+    }
+
+    runtime {
+        docker: "docker.io/blawney/rnaseq:v0.0.1"
+        cpu: 2
+        memory: "2 G"
+        disks: "local-disk " + disk_size + " HDD"
+        preemptible: 0
+    }
+}
+
+
+task zip_results {
+
+    String zip_name 
 
     File primary_fc_file
     File dedup_fc_file
@@ -93,14 +141,16 @@ task tar_results {
     Array[File] primary_fc_summaries
     Array[File] dedup_metrics
     File multiqc_report
+    File analysis_report
 
-    Int disk_size = 200
+    Int disk_size = 500
 
     command {
-        tar -cf "${tar_name}.tar" \
+        zip -j "${zip_name}.zip" \
             ${primary_fc_file} \
             ${dedup_fc_file} \
             ${multiqc_report} \
+            ${analysis_report} \
             ${sep=" " primary_bam_files} \
             ${sep=" " primary_bam_index_files} \
             ${sep=" " star_logs} \
@@ -110,7 +160,7 @@ task tar_results {
     }
 
     output {
-        File tar_out = "${tar_name}.tar"
+        File zip_out = "${zip_name}.zip"
     }
 
     runtime {

@@ -36,8 +36,8 @@ task count_reads {
     String output_counts_name = sample_name + "." + tag + ".feature_counts.tsv"
 
     Map[String, File] gtf_map = {
-        "hg38":"gs://cnap-hsph-resources/grch38.95/Homo_sapiens.GRCh38.95.gtf",
-        "mm10":"gs://cnap-hsph-resources/grch38.95/Homo_sapiens.GRCh38.95.gtf"
+        "Ensembl Homo sapiens GRCh38.95":"gs://cnap-hsph-resources/grch38.95/Homo_sapiens.GRCh38.95.gtf",
+        "Ensembl Mus Musculus GRCm38.95":"gs://cnap-hsph-resources/grcm38.95/Mus_musculus.GRCm38.95.gtf"
     }
 
     String strand_option = "0"

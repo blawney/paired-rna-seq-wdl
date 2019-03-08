@@ -2,5 +2,7 @@
   "PairedRnaSeqWorkflow.r1_files": "Array[File]",
   "PairedRnaSeqWorkflow.r2_files": "Array[File]",
   "PairedRnaSeqWorkflow.genome": "String",
-  "PairedRnaSeqWorkflow.output_tar_name": "String"
+  "PairedRnaSeqWorkflow.output_zip_name": "String",
+  "PairedRnaSeqWorkflow.git_repo_url": "String",
+  "PairedRnaSeqWorkflow.git_commit_hash": "String"
 }

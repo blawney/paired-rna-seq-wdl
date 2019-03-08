@@ -27,8 +27,8 @@ task infer_experiment {
     Int reads_sampled = 200000
     String outfile_name = "infer_experiment_output.csv"
     Map[String, File] annotation_bed_map = {
-        "hg38":"gs://cnap-hsph-resources/grch38.95/grch38.95.bed12_annotations.bed",
-        "mm10":"gs://cnap-hsph-resources/grch38.95/grch38.95.bed12_annotations.bed"
+        "Ensembl Homo sapiens GRCh38.95":"gs://cnap-hsph-resources/grch38.95/grch38.95.bed12_annotations.bed",
+        "Ensembl Mus musculus GRCm38.95":"gs://cnap-hsph-resources/grcm38.95/grcm38.95.bed12_annotations.bed"
     }
 
     command {
