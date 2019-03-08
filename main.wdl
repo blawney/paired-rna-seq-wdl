@@ -101,6 +101,8 @@ task generate_report {
     String git_repo_url
     String git_commit_hash
 
+    Int disk_size = 10
+
     command <<<
         generate_report.py \
           -r1 ${sep=" " r1_files} \
