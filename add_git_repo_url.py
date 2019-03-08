@@ -8,4 +8,4 @@ def add_to_context(request, workflow_obj, context_dict, context_args):
     template when the view is requested
     '''
     var_name = context_args['variable_name']
-    context[var_name] = workflow_obj.git_url
+    context_args[var_name] = workflow_obj.git_url
