@@ -16,7 +16,9 @@ workflow SingleSampleRnaSeqWorkflow{
 
     File r1_fastq
     File? r2_fastq
-    String genome
+    File star_index_path
+    File gtf
+    File bed_annotations
 
     # Extract the samplename from the fastq filename
     String sample_name = basename(r1_fastq, "_R1.fastq.gz")
@@ -26,7 +28,8 @@ workflow SingleSampleRnaSeqWorkflow{
         input:
             r1_fastq = r1_fastq,
             r2_fastq = r2_fastq,
-            genome = genome,
+            gtf = gtf,
+            star_index_path = star_index_path,
             sample_name = sample_name
     }
 
@@ -41,7 +44,7 @@ workflow SingleSampleRnaSeqWorkflow{
         input:
             input_bam = alignment.sorted_bam,
             input_bam_index = index1.bam_index,
-            genome = genome
+            bed_annotations = bed_annotations
     }
 
     # run the remainder of the QC process
@@ -49,7 +52,6 @@ workflow SingleSampleRnaSeqWorkflow{
         input:
             input_bam = alignment.sorted_bam,
             input_bam_index = index1.bam_index,
-            genome = genome
     }
 
     # Filter for primary reads only
@@ -83,7 +85,7 @@ workflow SingleSampleRnaSeqWorkflow{
     call feature_counts.count_reads as quantify_primary {
         input:
             input_bam = primary_filter.output_bam,
-            genome = genome,
+            gtf = gtf,
             sample_name = sample_name,
             tag = "primary"
     }
@@ -92,7 +94,7 @@ workflow SingleSampleRnaSeqWorkflow{
     call feature_counts.count_reads as quantify_deduplicated {
         input:
             input_bam = deduplicate.output_bam,
-            genome = genome,
+            gtf = gtf,
             sample_name = sample_name,
             tag = "primary_and_dedup"
     }

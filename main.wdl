@@ -11,6 +11,9 @@ workflow PairedRnaSeqWorkflow{
     Array[File] r1_files
     Array[File] r2_files
     String genome
+    File star_index_path
+    File gtf
+    File bed_annotations
     String output_zip_name
     String git_repo_url
     String git_commit_hash
@@ -32,7 +35,9 @@ workflow PairedRnaSeqWorkflow{
             input:
                 r1_fastq = item.left,
                 r2_fastq = item.right,
-                genome = genome
+                star_index_path = star_index_path,
+                gtf = gtf,
+                bed_annotations = bed_annotations
         }
     }
 
@@ -107,7 +112,7 @@ task generate_report {
         generate_report.py \
           -r1 ${sep=" " r1_files} \
           -r2 ${sep=" " r2_files} \
-          -g ${genome} \
+          -g "${genome}" \
           -r ${git_repo_url} \
           -c ${git_commit_hash} \
           -t /opt/report/paired_rnaseq_report.md \

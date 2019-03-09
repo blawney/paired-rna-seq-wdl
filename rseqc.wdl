@@ -2,13 +2,13 @@ workflow test_rseqc{
 
     File input_bam
     File input_bam_index
-    String genome
+    File bed_annotations
 
     call infer_experiment {
         input:
             input_bam = input_bam,
             input_bam_index = input_bam_index,
-            genome = genome
+            bed_annotations = bed_annotations
     }
 
     output {
@@ -21,20 +21,16 @@ task infer_experiment {
 
     File input_bam
     File input_bam_index
-    String genome
+    File bed_annotations
 
     Int disk_size = 100
     Int reads_sampled = 200000
     String outfile_name = "infer_experiment_output.csv"
-    Map[String, File] annotation_bed_map = {
-        "Ensembl Homo sapiens GRCh38.95":"gs://cnap-hsph-resources/grch38.95/grch38.95.bed12_annotations.bed",
-        "Ensembl Mus musculus GRCm38.95":"gs://cnap-hsph-resources/grcm38.95/grcm38.95.bed12_annotations.bed"
-    }
 
     command {
         alternate_infer_experiment.py \
            -i ${input_bam} \
-           -r ${annotation_bed_map[genome]} \
+           -r ${bed_annotations} \
            -s ${reads_sampled} \
            -o ${outfile_name}
     }
@@ -56,7 +52,6 @@ task qc_process {
 
     File input_bam
     File input_bam_index
-    String genome
 
     Int disk_size = 100
 

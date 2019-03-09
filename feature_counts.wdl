@@ -1,6 +1,6 @@
 workflow feature_counts_test {
     File input_bam
-    String genome
+    File gtf
     String sample_name
     String tag
     Array[File] countfile_array
@@ -8,7 +8,7 @@ workflow feature_counts_test {
     call count_reads {
         input:
             input_bam = input_bam,
-            genome = genome,
+            gtf = gtf,
             sample_name = sample_name,
             tag = tag
     }
@@ -29,16 +29,11 @@ workflow feature_counts_test {
 task count_reads {
 
     File input_bam
-    String genome
+    File gtf
     String sample_name
     String tag
 
     String output_counts_name = sample_name + "." + tag + ".feature_counts.tsv"
-
-    Map[String, File] gtf_map = {
-        "Ensembl Homo sapiens GRCh38.95":"gs://cnap-hsph-resources/grch38.95/Homo_sapiens.GRCh38.95.gtf",
-        "Ensembl Mus Musculus GRCm38.95":"gs://cnap-hsph-resources/grcm38.95/Mus_musculus.GRCm38.95.gtf"
-    }
 
     String strand_option = "0"
 
@@ -50,7 +45,7 @@ task count_reads {
             -p \
             -t exon \
             -g gene_name \
-            -a ${gtf_map[genome]} \
+            -a ${gtf} \
             -o ${output_counts_name} \
             ${input_bam}
     }

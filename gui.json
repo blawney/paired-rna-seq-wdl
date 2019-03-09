@@ -23,7 +23,15 @@
 			}	
 		},
 		{
-			"target": "PairedRnaSeqWorkflow.genome",
+			"target": {
+				"target_ids": ["PairedRnaSeqWorkflow.genome", 
+					"PairedRnaSeqWorkflow.star_index_path", 
+					"PairedRnaSeqWorkflow.gtf",
+					"PairedRnaSeqWorkflow.bed_annotations"
+				],
+				"name": "genome_choice",
+				"handler": "genome_mapper.py"
+			},
 			"display_element": {
 				"type": "select",
 				"label": "Reference genome",
