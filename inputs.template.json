@@ -1,8 +1,12 @@
 {
+  "PairedRnaSeqWorkflow.git_repo_url": "String",
+  "PairedRnaSeqWorkflow.git_commit_hash": "String",
+  "PairedRnaSeqWorkflow.gtf": "File",
   "PairedRnaSeqWorkflow.r1_files": "Array[File]",
+  "PairedRnaSeqWorkflow.bed_annotations": "File",
   "PairedRnaSeqWorkflow.r2_files": "Array[File]",
   "PairedRnaSeqWorkflow.genome": "String",
+  "PairedRnaSeqWorkflow.star_index_path": "File",
   "PairedRnaSeqWorkflow.output_zip_name": "String",
-  "PairedRnaSeqWorkflow.git_repo_url": "String",
-  "PairedRnaSeqWorkflow.git_commit_hash": "String"
 }
+
