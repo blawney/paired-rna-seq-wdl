@@ -40,12 +40,12 @@ workflow SingleSampleRnaSeqWorkflow{
     }
 
     # run the modified version of RseQC's infer experiment:
-    call rseqc.infer_experiment as infer_experiment{
-        input:
-            input_bam = alignment.sorted_bam,
-            input_bam_index = index1.bam_index,
-            bed_annotations = bed_annotations
-    }
+    #call rseqc.infer_experiment as infer_experiment{
+    #    input:
+    #        input_bam = alignment.sorted_bam,
+    #        input_bam_index = index1.bam_index,
+    #        bed_annotations = bed_annotations
+    #}
 
     # run the remainder of the QC process
     call rseqc.qc_process as rseqc_process{

@@ -108,10 +108,19 @@ if __name__ == '__main__':
     # get all the software versions:
     versions_dict = get_versions()
 
+    # alter how the files are displayed:
+    r1_files = arg_dict[R1]
+    r2_files = arg_dict[R2]
+    samples = [x[:-len('_R1.fastq.gz')] for x in r1_files]
+    file_display = []
+    for r1, r2, s in zip(r1_files, r2_files, samples):
+        file_display.append('%s: %s, %s' % (r1, r2, s))
+    
     # make the context dictionary
     context = {}
     context.update(versions_dict)
     context.update(arg_dict)
+    context.update({'file_display': file_display})
 
     # fill and write the completed report:
     fill_template(context, input_template_path, output_file)

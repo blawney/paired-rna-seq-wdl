@@ -5,7 +5,13 @@ This document discusses the steps that were performed in the analysis pipeline. 
 
 
 #### Version control:
-To facilitate reproducible analyses, the analysis pipeline used to process the data is kept under git-based version control.  The repository for this workflow is at {{git_repo}} and the commit version was {{git_commit}}.  This allows us to run the *exact* same pipeline at any later time, discarding any updates or changes in the process that may have been added.  
+To facilitate reproducible analyses, the analysis pipeline used to process the data is kept under git-based version control.  The repository for this workflow is at 
+
+{{git_repo}}
+
+and the commit version was {{git_commit}}.
+
+This allows us to run the *exact* same pipeline at any later time, discarding any updates or changes in the process that may have been added.  
 
 
 #### Methods:
@@ -17,6 +23,11 @@ Quality-control software included FastQC ({{fastqc_version}}), RSeQC ({{rseqc_ve
 #### Inputs:
 The inputs to the workflow were given as:
 
+Samples and sequencing fastq-format files:
+{% for i in file_display %}
+  - {{i}}
+{% endfor %}
+
 #### Outputs:
 
 The final output consists of various files, including:
@@ -26,4 +37,5 @@ The final output consists of various files, including:
 
 #### References:
 
+References go here
 
