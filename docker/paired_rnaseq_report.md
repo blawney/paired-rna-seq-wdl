@@ -24,8 +24,10 @@ Quality-control software included FastQC ({{fastqc_version}}), RSeQC ({{rseqc_ve
 The inputs to the workflow were given as:
 
 Samples and sequencing fastq-format files:
-{% for i in file_display %}
-  - {{i}}
+{% for obj in file_display %}
+  - {{obj.sample_name}}
+    - R1 fastq: {{obj.r1}}
+    - R2 fastq: {{obj.r2}}
 {% endfor %}
 
 #### Outputs:
