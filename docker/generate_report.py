@@ -17,6 +17,16 @@ GIT_REPO = 'git_repo'
 GIT_COMMIT = 'git_commit'
 
 
+class InputDisplay(object):
+    '''
+    A simple object to carry info to the markdown report.
+    '''
+    def __init__(self, sample_name, r1, r2):
+        self.sample_name = sample_name
+        self.r1 = r1
+        self.r2 = r2
+
+
 def get_jinja_template(template_path):
     '''
     Returns a jinja template to be filled-in
@@ -114,7 +124,8 @@ if __name__ == '__main__':
     samples = [os.path.basename(x)[:-len('_R1.fastq.gz')] for x in r1_files]
     file_display = []
     for r1, r2, s in zip(r1_files, r2_files, samples):
-        file_display.append('**%s**: %s, %s' % (s, r1, r2))
+        ipd = InputDisplay(s, r1, r2)
+        file_display.append(ipd)
     
     # make the context dictionary
     context = {}
