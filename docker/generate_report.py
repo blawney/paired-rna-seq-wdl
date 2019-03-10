@@ -111,10 +111,10 @@ if __name__ == '__main__':
     # alter how the files are displayed:
     r1_files = arg_dict[R1]
     r2_files = arg_dict[R2]
-    samples = [x[:-len('_R1.fastq.gz')] for x in r1_files]
+    samples = [os.path.basename(x)[:-len('_R1.fastq.gz')] for x in r1_files]
     file_display = []
     for r1, r2, s in zip(r1_files, r2_files, samples):
-        file_display.append('%s: %s, %s' % (r1, r2, s))
+        file_display.append('**%s**: %s, %s' % (s, r1, r2))
     
     # make the context dictionary
     context = {}
