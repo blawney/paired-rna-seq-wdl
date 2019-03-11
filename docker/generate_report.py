@@ -68,7 +68,7 @@ def get_versions():
     multiqc_version = multiqc_version_str.strip().split(',')[-1].split(' ')[-1]
     fastqc_version = fastqc_version_str.strip().split(" ")[-1]
     rseqc_version = rseqc_version_str.strip().split('==')[1]
-    picard_md_version = picard_md_str.strip()
+    picard_md_version = picard_md_str.strip().split(' ')[-1]
 
     d = {}
     d['star_version'] = star_version

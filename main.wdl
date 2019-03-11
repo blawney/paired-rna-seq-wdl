@@ -153,17 +153,22 @@ task zip_results {
     Int disk_size = 500
 
     command {
-        zip -j "${zip_name}.zip" \
-            ${primary_fc_file} \
-            ${dedup_fc_file} \
-            ${multiqc_report} \
-            ${analysis_report} \
-            ${sep=" " primary_bam_files} \
-            ${sep=" " primary_bam_index_files} \
-            ${sep=" " star_logs} \
-            ${sep=" " dedup_fc_summaries} \
-            ${sep=" " primary_fc_summaries} \
-            ${sep=" " dedup_metrics}
+        mkdir report
+        mkdir report/alignments
+        mkdir report/quantifications
+        mkdir report/qc
+        mkdir report/logs
+        mv ${primary_fc_file} report/quantifications/
+        mv ${dedup_fc_file} report/quantifications/
+        mv -t report/alignments ${sep=" " primary_bam_files}
+        mv -t report/alignments ${sep=" " primary_bam_index_files}
+        mv ${multiqc_report} report/qc/
+        mv -t report/logs ${sep=" " star_logs}
+        mv -t report/logs ${sep=" " dedup_fc_summaries}
+        mv -t report/logs ${sep=" " primary_fc_summaries}
+        mv -t report/logs ${sep=" " dedup_metrics}
+        mv ${analysis_report} report/
+        zip "${zip_name}.zip" report
     }
 
     output {
