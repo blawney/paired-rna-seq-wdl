@@ -168,7 +168,7 @@ task zip_results {
         mv -t report/logs ${sep=" " primary_fc_summaries}
         mv -t report/logs ${sep=" " dedup_metrics}
         mv ${analysis_report} report/
-        zip "${zip_name}.zip" report
+        zip -r "${zip_name}.zip" report
     }
 
     output {
